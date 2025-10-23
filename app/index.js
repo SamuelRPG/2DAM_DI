@@ -1,84 +1,64 @@
-import { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
-import { Button, Provider as PaperProvider, Text } from "react-native-paper";
+//rama main, proyecto base
 
- const estilInicial = 'florida';
- const isAdmin = true;
+import React, { useState } from "react";
+import { Text, View } from "react-native";
+import { Provider as PaperProvider, TextInput } from "react-native-paper";
+//wazaaaa
+const Saluda = ({ nom, cognoms }) => {
+  const [contrasenya, setPassword] = useState("");
+  const [contrasenyaOculta, setContrasenyaOculta] = useState(true);
+//asas
+  const modificaContrasenya = (unPassword) => {
+    setPassword(unPassword);
+    console.log("Actualitze: " + unPassword);
+  };
 
-const Nom = ({ nombre, apellido, estilo }) => {
+  const modificaContrasenyaOculta = () => {
+    setContrasenyaOculta(!contrasenyaOculta);
+  };
+
   return (
-    <Text style={estilo}> Bienvenido {nombre} {apellido} </Text>
-  )
-}
+    <View style={{ margin: 20 }}>
+      <Text style={{ fontSize: 18, margin: 10 }}>
+        Hola {nom} {cognoms}!!
+      </Text>
+      <Text>Primera pàgina de prova!!!.</Text>
 
-const PlaceholderColor = () => {
-  return (
-    estilInicial==='florida' ? "white" : "orange"
-  )
-}
-
-const MostrarBoto = () => {
-   return (
-    <View>
-    isAdmin && <Button icon="format-list-bulleted"/>
-    </View>
-    
-   )
-}
-
-const Dades = ({ ar }) => {
-  return (
-    <View style={estilInicial==='florida' ? styles.florida : styles.upv}>
-      {ar.map((elem, i) => (
-        <View key={i}>
-          <TextInput
-            placeholder={elem}
-            placeholderTextColor={PlaceholderColor()}
-          />
-        </View>
-      ))}
+      <View>
+        <TextInput
+          mode="outlined"
+          label="Password"
+          secureTextEntry={contrasenyaOculta}
+          value={contrasenya}
+          onChangeText={(contrasenya) =>modificaContrasenya(contrasenya)}
+          right={
+            <TextInput.Icon
+              icon={contrasenyaOculta ? "eye" : "eye-off"}
+              onPress={() => modificaContrasenyaOculta()}
+            />
+          }
+        />
+      </View>
     </View>
   );
-}
+};
 
-const Inici = () => {
-  const [array, setArray] = useState(["Email", "Nombre"]);
+const Index = () => {
   return (
     <PaperProvider>
-      <Nom nombre="Samuel" apellido="Niger" estilo={styles.texto} />
-      <Dades ar={array} />
-      <MostrarBoto/>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Saluda nom="Samuel" cognoms="Rodriguez" />
+      </View>
     </PaperProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  texto: {
-    marginTop: 40,
-    fontSize: 30,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-  upv: {
-    backgroundColor: 'purple',
-    fontSize: 10,
-    fontWeight: '600',
-    padding: 4,
-    paddingLeft: 12,
-    textAlign: 'left',
-    color: 'grey',
-  },
-  florida: {
-    backgroundColor: 'red',
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-})
-
-export default Inici;
+export default Index;
 
 
